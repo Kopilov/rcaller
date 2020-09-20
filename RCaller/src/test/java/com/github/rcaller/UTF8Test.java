@@ -26,10 +26,12 @@ public class UTF8Test {
 
         caller.setRCode(code);
 
-        code.addRCode("rside <- list(s = intToUtf8(500:550))");
-        caller.runAndReturnResult("rside");
+        code.addRCode("s = intToUtf8(500:550)");
+        caller.runAndReturnResult("s");
 
         String[] result = caller.getParser().getAsStringArray("s");
+        System.out.println(result[0]);
+        System.out.println(s);
         assertTrue(result[0].equals(s));
     }
     

@@ -532,8 +532,16 @@ public class RCaller {
         rCode.appendStandardCodeToAppend(outputFile, var);
         runRCode();
 
-        parser.setXMLFile(outputFile);
         try {
+            FileInputStream in = new FileInputStream(outputFile);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String l = "XML file:";
+            while (l != null) {
+                System.out.println(l);
+                l = reader.readLine();
+            }
+
+            parser.setXMLFile(outputFile);
             parser.parse();
         } catch (Exception e) {
             Logger.getLogger(RCaller.class.getName()).log(Level.INFO, rCode.toString());
