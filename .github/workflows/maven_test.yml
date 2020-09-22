@@ -27,6 +27,10 @@ jobs:
         sudo apt-get install -yq openjdk-8-jdk-headless maven
         sudo apt-get install -yq r-base
     - name: test UTF-8 in R
-      run: printf "s = intToUtf8(500:550) \n s" | R --vanilla
+      run: |
+        printf "s = intToUtf8(500:550) \n s" | R --vanilla
+        printf "s = intToUtf8(500:550) \n s \n sS = toString(s) \n sS" | R --vanilla
+        printf "s = intToUtf8(500:550) \n s \n sS = toString(s) \n sS \n ic = iconv(sS, to=\"UTF-8\") \n ic" | R --vanilla
+        printf "s = intToUtf8(500:550) \n s \n sS = toString(s) \n sS \n ic = iconv(sS, to=\"UTF-8\") \n ic \n pp = paste(\"<v>\",ic,\"</v>\",sep=\"\") \n pp" | R --vanilla
     - name: Build with Maven
       run: cd RCaller && mvn test
