@@ -17,14 +17,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Java, R and UTF8
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Set up R and UTF8
       run: |
-        sudo apt-get update
-        sudo apt-get -y upgrade
         sudo apt-get install -yq locales tzdata
         sudo locale-gen "en_US.UTF-8"
         sudo bash -c 'echo "LANG=en_US.UTF-8" > /etc/default/locale'
-        sudo apt-get install -yq openjdk-8-jdk-headless maven
         sudo apt-get install -yq r-base
     - name: test UTF-8 in R
       run: |
@@ -32,5 +33,12 @@ jobs:
         printf "s = intToUtf8(500:550) \n s \n sS = toString(s) \n sS" | R --vanilla
         printf "s = intToUtf8(500:550) \n s \n sS = toString(s) \n sS \n ic = iconv(sS, to=\"UTF-8\") \n ic" | R --vanilla
         printf "s = intToUtf8(500:550) \n s \n sS = toString(s) \n sS \n ic = iconv(sS, to=\"UTF-8\") \n ic \n pp = paste(\"<v>\",ic,\"</v>\",sep=\"\") \n pp" | R --vanilla
-    - name: Build with Maven
+    - name: test UTF-8 in R with XML
+      run: |
+        cp RCaller/src/main/resources/runiversal.r testutf8.r
+        echo "s = intToUtf8(500:550)" >> testutf8.r
+        echo 'cat(makexml(obj=s, name="s"), file="testS.xml")' >> testutf8.r
+        cat testutf8.r | R --vanilla
+        cat testS.xml
+    - name: Build and test with Maven
       run: cd RCaller && mvn test
