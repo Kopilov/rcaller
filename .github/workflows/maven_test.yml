@@ -40,5 +40,7 @@ jobs:
         echo 'cat(makexml(obj=s, name="s"), file="testS.xml")' >> testutf8.r
         cat testutf8.r | R --vanilla
         cat testS.xml
+    - name: test UTF-8 without JUnit
+      run: cd RCaller && mvn compile && mvn exec:exec -Dexec.executable="java" -Dexec.args="${JAVA_ARGS} -cp %classpath:${EXTERNAL_CLASSPATH} examples.Utf8Example"
     - name: Build and test with Maven
       run: cd RCaller && mvn test

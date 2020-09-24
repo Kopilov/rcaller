@@ -3,6 +3,7 @@ package com.github.rcaller;
 import com.github.rcaller.rstuff.RCaller;
 import com.github.rcaller.rstuff.RCode;
 import com.github.rcaller.util.Globals;
+import examples.Utf8Example;
 import org.junit.Test;
 
 import java.io.BufferedWriter;
@@ -21,15 +22,7 @@ public class UTF8Test {
     @Test
     public void Utf8CharactersTest() {
         String s = "ǴǵǶǷǸǹǺǻǼǽǾǿȀȁȂȃȄȅȆȇȈȉȊȋȌȍȎȏȐȑȒȓȔȕȖȗȘșȚțȜȝȞȟȠȡȢȣȤȥȦ";
-        RCode code = RCode.create();
-        RCaller caller = RCaller.create();
-
-        caller.setRCode(code);
-
-        code.addRCode("s = intToUtf8(500:550)");
-        caller.runAndReturnResult("s");
-
-        String[] result = caller.getParser().getAsStringArray("s");
+        String[] result = Utf8Example.characterConv();
         System.out.println(result[0]);
         System.out.println(s);
         assertTrue(result[0].equals(s));
