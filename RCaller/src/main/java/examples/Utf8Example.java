@@ -25,6 +25,7 @@ public class Utf8Example {
             System.out.println("Test completed");
         } else {
             System.out.println("Test incompleted");
+            System.exit(1);
         }
     }
 }
