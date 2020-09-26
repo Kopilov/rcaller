@@ -26,6 +26,7 @@ jobs:
         sudo apt-get install -yq locales tzdata
         sudo locale-gen "en_US.UTF-8"
         sudo bash -c 'echo "LANG=en_US.UTF-8" > /etc/default/locale'
+        echo '::set-env name=LANG::en_US.UTF-8'
         sudo apt-get install -yq r-base
     - name: test UTF-8 in R
       run: |
