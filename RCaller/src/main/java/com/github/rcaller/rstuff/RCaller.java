@@ -234,14 +234,14 @@ public class RCaller {
             }
         }
         String localeAndCharset = join(".", locale, Globals.standardCharset.toString());
-    
-        env.put("LC_COLLATE", localeAndCharset);
+
+//        env.put("LC_COLLATE", localeAndCharset);
         env.put("LC_CTYPE", localeAndCharset);
         env.put("LC_MESSAGES", localeAndCharset);
         env.put("LC_MONETARY", localeAndCharset);
         env.put("LC_NUMERIC", localeAndCharset);
         env.put("LC_TIME", localeAndCharset);
-        env.put("LC_ALL", localeAndCharset);
+//        env.put("LC_ALL", localeAndCharset);
 
         return pb.start();
     }
@@ -265,7 +265,7 @@ public class RCaller {
             stopStreamConsumers();
         }
         if (returnCode != 0) {
-            throw new ExecutionException("R command evaling " + rSourceFile.getAbsolutePath() + " failed with error. Reason: " + errorMessageSaver.getMessage());
+            throw new ExecutionException("R command evaling " + rSourceFile.getAbsolutePath() + " failed with error. Return code" + returnCode + ", Reason: " + errorMessageSaver.getMessage());
         }
     }
 
